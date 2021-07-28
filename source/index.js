@@ -61,10 +61,11 @@ exports.handler = async (event, context) => {
             Key: {
               id: event.pathParameters.id
             },
-            UpdateExpression: 'set price = :r',
+            UpdateExpression: 'set price = :r, #reservedword_name = :n',
             ExpressionAttributeValues: {
-             ':r': requestJSON.price,
+             ':r': requestJSON.price, ':n': requestJSON.name,
             },
+            ExpressionAttributeNames: { "#reservedword_name": "name" }
           })
           .promise();
         body = `Put item ${event.pathParameters.id}`;
